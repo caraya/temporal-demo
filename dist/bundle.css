@@ -1,0 +1,139 @@
+/* 
+(bundle from remote urls) 
+@import '//css-from-url';
+(bundle from npm)
+@import 'css-from-npm';
+(bundle from local)
+@import 'localfile.css' 
+(PresetENV)
+CSS powers @ https://preset-env.cssdb.org/features
+*/
+
+:root {
+  --surface: rgb(102, 0, 204);
+  --text: rgb(255, 254, 255);
+  --brand: rgb(242, 108, 140);
+}
+
+@supports (color: color(display-p3 0 0 0)) {
+:root {
+  --surface: color(display-p3 0.36448 0.05516 0.76862);
+}
+}
+
+@supports (color: color(display-p3 0 0 0)) {
+:root {
+  --text: color(display-p3 0.99927 0.99618 0.99968);
+}
+}
+
+@supports (color: color(display-p3 0 0 0)) {
+:root {
+  --brand: color(display-p3 0.88439 0.45464 0.55143);
+}
+}
+
+@media (prefers-color-scheme: light) {
+
+:root {
+    --surface: rgb(249, 249, 249);
+    --text: rgb(71, 71, 71);
+    --brand: rgb(251, 103, 180);
+}
+
+@supports (color: color(display-p3 0 0 0)) {
+:root {
+    --surface: color(display-p3 0.97731 0.97731 0.97731);
+}
+}
+
+@supports (color: color(display-p3 0 0 0)) {
+:root {
+    --text: color(display-p3 0.27699 0.27699 0.27699);
+}
+}
+
+@supports (color: color(display-p3 0 0 0)) {
+:root {
+    --brand: color(display-p3 0.91670 0.44072 0.69654);
+}
+}
+  }
+
+@media (prefers-color-scheme: light) and (dynamic-range: high) {
+
+:root {
+      --brand: rgb(255,42,251);
+}
+    }
+
+html {
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+body {
+  min-block-size: 100%;
+  min-inline-size: 100%;
+  box-sizing: border-box;
+
+  background: rgb(102, 0, 204);
+
+  background: color(display-p3 0.36448 0.05516 0.76862);
+
+  background: var(--surface);
+  color: rgb(255, 254, 255);
+  color: color(display-p3 0.99927 0.99618 0.99968);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+  
+}
+
+header, 
+ article {
+  width: 80vw;
+  margin: 2rem auto;
+}
+
+a {
+  color: rgb(0,131,255);
+}
+
+a visited {
+    color: rgb(140,0,255);
+  }
+
+::-moz-selection {
+  background-color: rgb(242, 108, 140);
+  background-color: color(display-p3 0.88439 0.45464 0.55143);
+  background-color: var(--brand);
+}
+
+::selection {
+  background-color: rgb(242, 108, 140);
+  background-color: color(display-p3 0.88439 0.45464 0.55143);
+  background-color: var(--brand);
+}
+
+article {
+  margin-block: 4rem;
+  
+}
+
+article h1 {
+    max-inline-size: 80ch;
+    -webkit-margin-after: 0;
+            margin-block-end: 0;
+  }
+
+article is(h1,h2,h3,h4,h5,h6) {
+    line-height: 1.5;
+    max-inline-size: 25ch;
+  }
+
+article p {
+    line-height: 2;
+    font-size: 1.25rem;
+    font-weight: 300;
+    max-inline-size: 45ch;
+  }

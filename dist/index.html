@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+  <title>Bundler Experiment</title>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#ff69b4">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="🙂">
+
+  <link rel="stylesheet" href="bundle.css">
+  <link rel="stylesheet" href="prism.css">
+  <script src="./bundle.js" type="module" defer></script>
+  <script src="./prism.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>Temporal Polyfill Experiment</h1>
+    <small>Different things you can do with a calendar</small>
+  </header>
+
+
+
+  <article>
+
+    <section>
+      <h2>Plain Date (default)</h2>
+      <div id="plainDate"></div>
+
+      <pre><code class="language-js">const plainDate = Temporal.Now.plainDateISO();
+plainDateDisplay.innerHTML = `${plainDate}`;</code></pre>
+    </section>
+
+    <section>
+      <h2>Plain Date Using Default Locale</h2>
+      <div id="plainLocale"></div>
+
+      <pre><code class="language-js">const plainDate = Temporal.Now.plainDateISO();
+plainDateLocale.innerHTML = `${plainDate.toLocaleString()}`;</code></pre>
+    </section>
+
+    <section>
+      <h2>Custom Date String</h2>
+      <p>In this case the custom string has only month and year</p>
+      <div id="dateCustom"></div>
+
+      <pre><code class="language-js">const plainDate = Temporal.Now.plainDateISO();
+plainDateCustom.innerHTML = `${plainDate.month}/${plainDate.year}`;</code></pre>
+    </section>
+
+    <section>
+      <h2>Changing Timezones</h2>
+      <div id="dateCustomTZ"></div>
+
+      <pre><code class="language-js">// Changing Locale
+const financialCentres = {
+  'New York': 'America/New_York',
+  'London': 'Europe/London',
+  'Tokyo': 'Asia/Tokyo',
+  "Santiago, Chile": 'America/Santiago'
+};
+
+Object.entries(financialCentres).forEach(([name, timeZone]) => {
+  let p = document.createElement('p')
+  p.append(`${name} (${timeZone}) ${Temporal.Now.plainDateTimeISO(timeZone).toLocaleString()}`);
+  plainDateTZ.append(p)
+});</code></pre>
+    </section>
+
+    <section>
+      <h2>Relative Times From Today</h2>
+      <div id="dateRelativeToday"></div>
+
+      <pre><code class="language-js">const dateNow = Temporal.Now.plainDate('iso8601'); // Gets the current date
+
+plainDateRelative1.innerHTML = `
+&lt;p>&lt;strong>Base Date&lt;/strong>: ${dateNow.toString()}
+&lt;p>5 days from today: ${dateNow.add({days: 5})tring()}&lt;/p>
+&lt;p>5 days ago: ${dateNow.add({days: -5}).toString()}&lt;/p>`</code></pre>
+    </section>
+
+    <section>
+      <h2>Relative Times From a Given Date</h2>
+      <div id="dateRelativeGivenDay"></div>
+
+      <pre><code class="language-js">const date2 = Temporal.PlainDate.from('1994-03-27');
+
+plainDateRelative2.innerHTML = `
+&lt;p>&lt;strong>Base Date&lt;/strong>: ${date2}
+&lt;p>5 days after initial date: ${date2.add({days: +5}).toString()}&lt;/p>
+&lt;p>5 days before initial date: ${date2.add({days: -5}).toString()}&lt;/p>`</code></pre>
+    </section>
+
+    <!-- <section>
+      <h2>Duration Since</h2>
+      <p><strong>Currently this example doesn't produce human-readable output and I don't know how to convert the output into something humans can read.</strong></p>
+      <div id="temporalDuration"></div>
+      <pre><code class="language-js"></code></pre>
+    </section> -->
+
+    <section>
+      <h2>Duration Since</h2>
+      <div id="temporalPastDate"></div>
+      <pre><code class="language-js">const originalPastDate = Temporal.PlainDate.from("1994-03-27")
+function englishPlural(n, singular, plural) {
+  return `${n} ${n === 1 ? singular : plural}`;
+}
+
+// If originalPastDate is not null/empty
+if (originalPastDate !== null) {
+  const browserCalendar = new Intl.DateTimeFormat().resolvedOptions().calendar;
+  const pastDate = Temporal.PlainDate.from(originalPastDate).withCalendar(browserCalendar);
+  const today = Temporal.Now.plainDate(browserCalendar);
+  const since = today.since(pastDate, { largestUnit: 'day' });
+  const sinceMonths = since.round({ largestUnit: 'month', relativeTo: today });
+  const sinceYears = since.round({largestUnit: 'years', relativeTo: today });
+
+  const dayString = englishPlural(since.days, 'day', 'days');
+  const monthString =
+    `${englishPlural(sinceMonths.months, 'month', 'months')}` +
+    (sinceMonths.days !== 0 ? `, ${englishPlural(sinceMonths.days, 'day', 'days')}` : '');
+  const yearString = 
+    `${englishPlural(sinceYears.years, 'year', 'years')}` +
+    (sinceYears.months !== 0 ? `, ${englishPlural(sinceYears.months, 'month', 'months')}` : '') +
+    (sinceYears.days !== 0 ? `, ${englishPlural(sinceYears.days, 'day', 'days')}` : '');
+
+  results.innerHTML = `
+    &lt;p>From and including: &lt;strong>${today.toLocaleString()}&lt;/strong>&lt;/p>
+    &lt;p>Going back to but not including: &lt;strong>${pastDate.toLocaleString()}&lt;/strong>&lt;/p>
+    &lt;p>It's been ${dayString} from the start date to, but not including the end date.&lt;/p>
+    &lt;p>Or ${monthString} excluding the end date.&lt;/p>
+    &lt;p>Or ${yearString} years since the start date&lt;/p>
+  `;
+}</code></pre>
+    </section>
+
+  </article>
+</body>
+
+</html>
