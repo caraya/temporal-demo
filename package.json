@@ -13,14 +13,14 @@
     "dev:js": "rollup -c -w",
     "dev:css": "postcss app/css/index.css -o app/bundle.css -w",
     "dev:server": "browser-sync app --files \"app/**/*, !app/css/**, !app/js/**\" --no-open --no-notify",
-    "prod:server": "browser-sync dist --no-open --no-notify --no-ghost-mode",
+    "prod:server": "browser-sync docs --no-open --no-notify --no-ghost-mode",
     "build:pre:js": "rollup -c --environment NODE_ENV:production",
-    "build:pre:css": "postcss app/css/index.css -o dist/bundle.css --env production",
-    "build:post:copy": "cp app/index.html dist/index.html && cp app/prism.css dist/prism.css && cp app/prism.js dist/prism.js",
-    "build": "rimraf dist && concurrently npm:build:pre:* && concurrently npm:build:post:*",
+    "build:pre:css": "postcss app/css/index.css -o docs/bundle.css --env production",
+    "build:post:copy": "cp app/index.html docs/index.html && cp app/prism.css docs/prism.css && cp app/prism.js docs/prism.js",
+    "build": "rimraf docs && concurrently npm:build:pre:* && concurrently npm:build:post:*",
     "start": "concurrently --kill-others npm:dev:*",
     "production": "npm run build && npm run prod:server",
-    "clean": "rimraf dist"
+    "clean": "rimraf docs"
   },
   "devDependencies": {
     "@ampproject/rollup-plugin-closure-compiler": "^0.27.0",
