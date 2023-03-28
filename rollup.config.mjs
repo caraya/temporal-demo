@@ -53,7 +53,7 @@ const prod = [
   {
     input: 'app/js/index.js',
     output: {
-      file: 'dist/bundle.js',
+      file: 'docs/bundle.js',
       format: 'esm',
       sourcemap: true,
     },
