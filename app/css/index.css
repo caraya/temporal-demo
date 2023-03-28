@@ -1,0 +1,81 @@
+/* 
+(bundle from remote urls) 
+@import '//css-from-url';
+(bundle from npm)
+@import 'css-from-npm';
+(bundle from local)
+@import 'localfile.css' 
+(PresetENV)
+CSS powers @ https://preset-env.cssdb.org/features
+*/
+
+:root {
+  --surface: lch(30.92% 102.31 308.18);
+  --text: lch(99.75% 0.59 322.97);
+  --brand: lch(63.42% 55.4 9.72);
+
+  @media (prefers-color-scheme: light) {
+    --surface: lch(98 0 0);
+    --text: lch(30 0 0);
+    --brand: lch(65 64 350);
+
+    @media (dynamic-range: high) {
+      --brand: color(display-p3 1 0 1);
+    }
+  }
+}
+
+html {
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+body {
+  min-block-size: 100%;
+  min-inline-size: 100%;
+  box-sizing: border-box;
+
+  background: var(--surface);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  
+}
+
+header, 
+ article {
+  width: 80vw;
+  margin: 2rem auto;
+}
+
+a {
+  color: color(display-p3 0 .5 1);
+
+  & visited {
+    color: color(display-p3 .5 0 1);
+  }
+}
+
+::selection {
+  background-color: var(--brand);
+}
+
+article {
+  margin-block: 4rem;
+  & h1 {
+    max-inline-size: 80ch;
+    margin-block-end: 0;
+  }
+
+  & is(h1,h2,h3,h4,h5,h6) {
+    line-height: 1.5;
+    max-inline-size: 25ch;
+  }
+  
+  & p {
+    line-height: 2;
+    font-size: 1.25rem;
+    font-weight: 300;
+    max-inline-size: 45ch;
+  }
+  
+}

@@ -1,0 +1,51 @@
+{
+  "name": "bundler-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Carlos Araya <carlos.araya@gmail.com> (https://publishing-project.rivendellweb.net/)",
+  "license": "MIT",
+  "browserslist": [
+    "defaults"
+  ],
+  "scripts": {
+    "dev:js": "rollup -c -w",
+    "dev:css": "postcss app/css/index.css -o app/bundle.css -w",
+    "dev:server": "browser-sync app --files \"app/**/*, !app/css/**, !app/js/**\" --no-open --no-notify",
+    "prod:server": "browser-sync dist --no-open --no-notify --no-ghost-mode",
+    "build:pre:js": "rollup -c --environment NODE_ENV:production",
+    "build:pre:css": "postcss app/css/index.css -o dist/bundle.css --env production",
+    "build:post:copy": "cp app/index.html dist/index.html && cp app/prism.css dist/prism.css && cp app/prism.js dist/prism.js",
+    "build": "rimraf dist && concurrently npm:build:pre:* && concurrently npm:build:post:*",
+    "start": "concurrently --kill-others npm:dev:*",
+    "production": "npm run build && npm run prod:server",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "@ampproject/rollup-plugin-closure-compiler": "^0.27.0",
+    "@babel/core": "^7.20.2",
+    "@babel/preset-env": "^7.20.2",
+    "@csstools/postcss-color-function": "^2.1.0",
+    "@rollup/plugin-babel": "^6.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^0.4.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "browser-sync": "^2.27.10",
+    "concurrently": "^7.5.0",
+    "cssnano": "^5.1.14",
+    "import-http": "^0.3.1",
+    "postcss": "^8.4.19",
+    "postcss-cli": "^10.0.0",
+    "postcss-import": "^15.0.0",
+    "postcss-import-url": "^7.0.0",
+    "postcss-loader": "^7.0.1",
+    "postcss-preset-env": "^7.8.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^3.3.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "temporal-polyfill": "^0.1.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
+  }
+}
