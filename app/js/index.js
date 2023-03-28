@@ -50,26 +50,6 @@ plainDateRelative2.innerHTML = `
 <p><strong>Base Date</strong>: ${date2}
 <p>5 days after initial date: ${date2.add({days: +5}).toString()}
 <p>5 days before initial date: ${date2.add({days: -5}).toString()}`
-
-// // THIS DOESN'T PRODUCE HUMAN-READABLE OUTPUT
-// // AND I DON'T KNOW HOW TO CONVERT IT TO SOMETHING
-// // HUMANS CAN READ
-// // Duration since a given date
-// // Thinking this may be useful for 
-// // relative dates since a blog post
-// // was published or similar use cases
-// const today = Temporal.Now.plainDateISO();
-// // We would extract date posted from 
-// // a database or get the information
-// // from elsewhere. 
-// // Here's fixed in datePosted
-// const datePosted = Temporal.PlainDate.from('2012-10-15')
-// // Calculation of duration
-// const duration = today.until(datePosted, {largestUnit: "years"})
-// // Put it on the page
-// temporalDuration.innerHTML = `<p>It's been ${duration.toLocaleString()} ago</p>`;
-
-
 const originalPastDate = Temporal.PlainDate.from("1994-03-27")
 // If you have Intl.DurationFormat, then you can do this with
 // until.toLocaleString() and untilMonths.toLocaleString(). This
@@ -101,7 +81,7 @@ if (originalPastDate !== null) {
     <p>From and including: <strong>${today.toLocaleString()}</strong></p>
     <p>Going back to but not including: <strong>${pastDate.toLocaleString()}</strong></p>
     <p>It's been ${dayString} from the start date to, but not including the end date.</p>
-    <p>Or ${monthString} excluding the end date.</p>
-    <p>Or ${yearString} years since the start date</p>
+    <p>Or ${monthString} since the start date, excluding the end date.</p>
+    <p>Or ${yearString} since the start date</p>
   `;
 }
